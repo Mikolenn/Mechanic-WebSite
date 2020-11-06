@@ -1,0 +1,23 @@
+{% load widget_tweaks %}
+
+  <div class="container">
+
+    <h1>Cars</h1>
+    {% if object_pk and object_car_model %}
+    <h2>
+      Bienvenido a la pagina del carro {{object_car_model}} con pk {{object_pk}}, age: {{object_age}}
+    </h2>
+    {%else%}
+
+
+
+    <h2>List of Car objects</h2>
+    {% for car_model, values in car_dict.items %}
+      <a href="{% url 'show' values.pk %}">
+        <h3>
+          {{car_model}} with pk: {{values.pk}}, year {{values.year}}
+        </h3>
+      </a>
+    {% endfor %}
+    {% endif %}
+  </div>

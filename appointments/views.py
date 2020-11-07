@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 
 from .models import Car
 from .forms import CarForm
-# 
+#
 # def new(request):
 #     new_form = CarForm()
 #     note= 'Hola perro'
@@ -16,6 +16,10 @@ from .forms import CarForm
 #         }
 #
 #     )
+
+def base(request):
+    return render(request,'base.html',{})
+
 
 def new(request):
     return HttpResponse('Showing "new" page')

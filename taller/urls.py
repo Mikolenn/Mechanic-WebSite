@@ -10,6 +10,8 @@ urlpatterns = [
     path('show/<int:pk>', views.show, name='show'),
     path('new/', views.new, name='new'),
     path('register/', viewsR.register, name='register'),
-    path('', views.base, name='base'),
+    path('', views.home, name='base'),
     path('', include("django.contrib.auth.urls")),
+    path('view/', views.view, name='view'),
+    path('create/', views.create, name='create'),
 ]

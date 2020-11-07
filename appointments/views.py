@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 
-from .models import Car
-from .forms import CarForm
+
+from .models import Car, ToDoList, Item
+from .forms import CarForm, CreateNewList
 #
 # def new(request):
 #     new_form = CarForm()
@@ -59,3 +60,47 @@ def show(request, pk=None):
                 'car_dict': car_dict,
             }
         )
+
+def index(request, id):
+    ls = ToDoList.objects.get(id=id)
+    if request.method == "POST":
+        if request.POST.get("save"):
+            for item in ls.item_set.all():
+               if response.POST.get("c" + str(item.id)) == "clicked":
+                   item.complete = True
+               else:
+                   item.complete = False
+
+               item.save()
+
+        elif response.POST.get("newItem"):
+            txt= response.POST.get("new")
+            if len(txt)>2:
+                ls.item_set.create(text=txt, complete =False)
+            else:
+                print("invalid")
+
+    return render(request, "index.html", {"ls": ls})
+
+
+def create(response):
+    if response.method == "POST":
+        form = CreateNewList(response.POST)
+
+        if form.is_valid() and response.user.is_authenticated:
+            n=form.cleaned_data["name"]
+            t=ToDoList(name=n)
+            t.save()
+            response.user.todolist.add(t)
+        # return HttpResponseRedirect("/%i" %t.id)
+    else:
+        form = CreateNewList()
+
+    return render(response,"create.html",{"form":form})
+
+
+def view(response):
+    return render(response, "views.html", {})
+
+def home(response):
+    return render(response, "home.html", {})

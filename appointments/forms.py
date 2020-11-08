@@ -9,14 +9,14 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = [
-            'car_model',
-            'transmission',
-            'year',
             'brand',
+            'car_model',
+            'year',
+            'transmission',
             ]
         labels = {
-            'car_model': 'Car_model',
-            'transmission': 'Transmission',
-            'year': 'Year',
-            'brand': 'Brand',
+            'brand': 'Marca',
+            'car_model': 'Modelo',
+            'year': 'Año',
+            'transmission': 'Transmisión',
         }

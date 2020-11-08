@@ -92,7 +92,8 @@ def create(response):
             'create.html',
             {
                 'carform':new_form,
-                'created_car_pk':new_pk
+                'created_car_pk':new_pk,
+                'note': note
             }
         )
     else:

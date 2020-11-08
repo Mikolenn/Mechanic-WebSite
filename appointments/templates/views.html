@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %} View {% endblock %}
+
+
+{% block content %}
+  {% for td in user.car.all %}
+    <p>{{td.car_model}}</p>
+  {% endfor %}
+{%endblock%}

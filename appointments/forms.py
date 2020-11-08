@@ -13,10 +13,12 @@ class CarForm(forms.ModelForm):
             'car_model',
             'year',
             'transmission',
+            'schedule'
             ]
         labels = {
             'brand': 'Marca',
             'car_model': 'Modelo',
             'year': 'Año',
             'transmission': 'Transmisión',
+            'schedule': 'Horario'
         }

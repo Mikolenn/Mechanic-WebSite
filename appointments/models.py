@@ -7,6 +7,16 @@ TRANSMISSION = [
     ('M', 'Manual')
 ]
 
+SCHEDULE = [
+    (8, '8:00 am'),
+    (9, '9:00 am'),
+    (10, '10:00 am'),
+    (11, '11:00 am'),
+    (1, '1:00 pm'),
+    (2, '2:00 pm'),
+    (3, '3:00 pm'),
+    (4, '4:00 pm'),
+]
 
 class Car(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="car", null=True)
@@ -14,6 +24,7 @@ class Car(models.Model):
     transmission = models.CharField(max_length=1, choices=TRANSMISSION)
     year = models.PositiveIntegerField(blank=True)
     brand =  models.CharField(max_length=20)
+    schedule = models.PositiveIntegerField(choices=SCHEDULE)
 
 
 

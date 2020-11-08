@@ -50,10 +50,10 @@ def show(request, pk=None):
             }
         )
 
-def index(request, id):
+def index(response, id):
     ls = ToDoList.objects.get(id=id)
-    if request.method == "POST":
-        if request.POST.get("save"):
+    if response.method == "POST":
+        if response.POST.get("save"):
             for item in ls.item_set.all():
                if response.POST.get("c" + str(item.id)) == "clicked":
                    item.complete = True

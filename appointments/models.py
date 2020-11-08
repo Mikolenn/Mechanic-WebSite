@@ -9,10 +9,13 @@ TRANSMISSION = [
 
 
 class Car(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="car", null=True)
     car_model = models.CharField(max_length=20)
     transmission = models.CharField(max_length=1, choices=TRANSMISSION)
     year = models.PositiveIntegerField(blank=True)
     brand =  models.CharField(max_length=20)
+
+
 
 class ToDoList(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="todolist", null=True)

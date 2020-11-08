@@ -1,18 +1,33 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block title %}
-Create New List
+Create New car
 {% endblock %}
 
+
+
 {% block content %}
-	<h3>Crear una cita</h3>
-	<br>
-	<form method="post", action="/create/" class="form-group">
+<div class="container">
+
+	<h1>Create new car</h1>
+
+	<h2>Hola</h2>
+
+	<form action="{% url 'create' %}" method="post">
 		{% csrf_token %}
-		<div class="input-group mb-3">
-	  		<div class="input-group-prepend">
-	  		<button name="save", type="submit", class="btn btn-success">Create</button>
-	  		</div>
-	  		{{form.name}}
+		{% for field in carform%}
+		<div class="form-group">
+			{{field.label_tag}}
+			{% render_field field class="form-control" %}
 		</div>
+		{% endfor %}
+		<input type="submit" value="New Car Object">
+
 	</form>
+
+
+</div>
+
+
+
 {% endblock %}

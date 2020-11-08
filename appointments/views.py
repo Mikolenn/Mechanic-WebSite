@@ -4,19 +4,8 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 
 from .models import Car, ToDoList, Item
 from .forms import CarForm, CreateNewList
-#
-# def new(request):
-#     new_form = CarForm()
-#     note= 'Hola perro'
-#     return render(
-#         request,
-#         'new.html',
-#         {
-#             'note': note,
-#             'carform': new_form,
-#         }
-#
-#     )
+
+
 
 def base(request):
     return render(request,'base.html',{})
@@ -83,20 +72,37 @@ def index(request, id):
     return render(request, "index.html", {"ls": ls})
 
 
+
 def create(response):
-    if response.method == "POST":
-        form = CreateNewList(response.POST)
+    new_form=CarForm()
+    if response.method == 'POST':
+        filled_form = CarForm(response.POST)
 
-        if form.is_valid() and response.user.is_authenticated:
-            n=form.cleaned_data["name"]
-            t=ToDoList(name=n)
-            t.save()
-            response.user.todolist.add(t)
-        # return HttpResponseRedirect("/%i" %t.id)
+        if filled_form.is_valid and response.user.is_authenticated:
+            new_car=filled_form.save()
+            response.user.car.add(new_car)
+            new_pk=new_car.pk
+            note=(
+                'Se creo el carro con pk \'{}\' correctamente \n'
+            )
+        else:
+            note='Invalid form'
+        return render(
+            response,
+            'create.html',
+            {
+                'carform':new_form,
+                'created_car_pk':new_pk
+            }
+        )
     else:
-        form = CreateNewList()
-
-    return render(response,"create.html",{"form":form})
+        return render(
+            response,
+            'create.html',
+            {
+                'carform':new_form,
+            }
+        )
 
 
 def view(response):

@@ -113,7 +113,6 @@ def create(response):
 
         if filled_form.is_valid and response.user.is_authenticated:
             new_car=filled_form.save()
-            # provider=new_car.provider
             response.user.car.add(new_car)
             new_pk=new_car.pk
             note=(
@@ -121,7 +120,7 @@ def create(response):
             )
         else:
             note='Invalid form'
-            print('mamonazo')
+            new_pk=-1
         return render(
             response,
             'create.html',

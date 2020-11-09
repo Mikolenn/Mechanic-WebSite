@@ -10,8 +10,8 @@ class CarForm(forms.ModelForm):
 
     class Meta:
         model = Car
-        fields = ['provider', 'car_model', 'transmission', 'year', 'brand']
-        labels = {'provider': 'Provider', 'car_model': 'Car_model', 'transmission': 'Transmission', 'year': 'Year', 'brand': 'Brand'}
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args,**kwargs)
-        self.fields['provider'].queryset= User.objects.filter(is_staff=True)
+        fields = ['car_model', 'transmission', 'year', 'brand']
+        labels = {'car_model': 'Car_model', 'transmission': 'Transmission', 'year': 'Year', 'brand': 'Brand'}
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args,**kwargs)
+    #     self.fields['provider'].queryset= User.objects.filter(is_staff=True)

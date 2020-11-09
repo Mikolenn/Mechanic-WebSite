@@ -11,8 +11,8 @@ TRANSMISSION = [
 
 
 class Car(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user", null=True)
-    provider=models.ForeignKey(User,on_delete=models.CASCADE,related_name="provider")
+    user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="car", null=True)
+    # provider=models.ForeignKey(User,on_delete=models.CASCADE,related_name="carP",null=True)
     car_model = models.CharField(max_length=20)
     transmission = models.CharField(max_length=1, choices=TRANSMISSION)
     year = models.PositiveIntegerField(blank=True)

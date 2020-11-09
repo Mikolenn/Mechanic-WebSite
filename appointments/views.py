@@ -1,9 +1,42 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-
-
 from .models import Car, ToDoList, Item
 from .forms import CarForm, CreateNewList
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def staff(request, pk=None):
+    if pk is not None:
+        try:
+            car=Car.objects.get(pk=pk)
+        except Car.DoesNotExist:
+            raise Http404('Pet with pk {} does not exist'.format(pk))
+        return render(
+            request,
+            'staff.html',
+            {
+                'object_pk': car.pk,
+                'object_car_model': car.car_model,
+                'object_year': car.year,
+            }
+        )
+
+    else:
+        car_dict = {}
+        for car in Car.objects.all():
+            car_dict[car.car_model]= {
+                'pk': car.pk,
+                'year': car.year,
+            }
+            print(car_dict)
+
+        return render(
+            request,
+            'staff.html',
+            {
+                'car_dict': car_dict,
+            }
+        )
 
 
 

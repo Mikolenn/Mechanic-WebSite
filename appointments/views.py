@@ -20,14 +20,14 @@ def show(request, pk=None):
 
     if pk is not None:
         try:
-            car=Car.objects.get(pk=pk)
+            car = Car.objects.get(pk=pk)
         except Car.DoesNotExist:
             raise Http404('Pet with pk {} does not exist'.format(pk))
         return render(
             request,
             'show.html',
             {
-                'object_pk': car.pk,
+                'object_brand': car.brand,
                 'object_car_model': car.car_model,
                 'object_year': car.year,
             }
@@ -36,7 +36,7 @@ def show(request, pk=None):
     else:
         car_dict = {}
         for car in Car.objects.all():
-            car_dict[car.car_model]= {
+            car_dict[car.brand]= {
                 'pk': car.pk,
                 'year': car.year,
             }
@@ -69,30 +69,40 @@ def index(response, id):
             else:
                 print("invalid")
 
-    return render(request, "index.html", {"ls": ls})
+    return render(response, "index.html", {"ls": ls})
 
 
 
 def create(response):
-    new_form=CarForm()
+    new_form = CarForm()
     if response.method == 'POST':
         filled_form = CarForm(response.POST)
 
         if filled_form.is_valid and response.user.is_authenticated:
-            new_car=filled_form.save()
-            response.user.car.add(new_car)
-            new_pk=new_car.pk
-            note=(
-                'Se creo el carro con pk \'{}\' correctamente \n'
-            )
+            new_car = None
+            repetido = False
+
+            for car in Car.objects.all():
+                new_car = filled_form.save()
+
+                if car.schedule == new_car.schedule:
+                    repetido = True
+            if repetido:
+                note='El horario no está disponible'
+            else:
+                response.user.car.add(new_car)
+                note = (
+                    'Se creo una cita para un carro {} {} a las {}\n'
+                    .format(new_car.brand, new_car.car_model,
+                    new_car.schedule)
+                )
         else:
-            note='Invalid form'
+            note='formulario inválido'
         return render(
             response,
             'create.html',
             {
                 'carform':new_form,
-                'created_car_pk':new_pk,
                 'note': note
             }
         )

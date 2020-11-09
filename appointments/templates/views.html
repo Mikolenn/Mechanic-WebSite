@@ -5,6 +5,6 @@
 
 {% block content %}
   {% for td in user.car.all %}
-    <p>{{td.car_model}}</p>
+    <h2>{{td.brand}} {{td.car_model}}</h2>
   {% endfor %}
 {%endblock%}

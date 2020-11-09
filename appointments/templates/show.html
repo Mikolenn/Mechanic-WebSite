@@ -6,9 +6,9 @@
   <div class="container">
 
     <h1>Citas actuales</h1>
-    {% if object_brand and object_car_model %}
+    {% if object_brand and object_car_model and object_year %}
     <h2>
-      Bienvenido a la pagina del carro marca {{object_brand}}, modelo {{object_car_model}}}
+      Bienvenido a la pagina del carro marca {{object_brand}}, modelo {{object_car_model}}, año {{object_year}}
     </h2>
     {%else%}
 
@@ -18,7 +18,7 @@
     {% for car_brand, values in car_dict.items %}
       <a href="{% url 'show' values.pk %}">
         <h3>
-          {{car_brand}} with pk: {{values.pk}}, year {{values.year}}
+          {{car_brand}} {{values.pk}}, year {{values.year}}
         </h3>
       </a>
     {% endfor %}

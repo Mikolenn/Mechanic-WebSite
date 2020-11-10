@@ -124,7 +124,7 @@ def create(response):
                     repetido = True
                     
             if repetido:
-                note='El horario no está disponible'
+                note = 'El horario no está disponible'
             else:
                 new_car = filled_form.save()
                 response.user.car.add(new_car)
@@ -153,8 +153,48 @@ def create(response):
         )
 
 
-def view(response):
-    return render(response, "views.html", {})
+# def view(response):
+#     return render(response, "views.html", {})
+
+
+def view(request, pk=None):
+
+    if pk is not None:
+        try:
+            car = Car.objects.get(pk=pk)
+        except Car.DoesNotExist:
+            raise Http404('Pet with pk {} does not exist'.format(pk))
+        return render(
+            request,
+            'views.html',
+            {
+                'brand': car.brand,
+                'car_model': car.car_model,
+                'year': car.year,
+                'day': car.day,
+                'schedule': car.schedule
+            }
+        )
+
+    else:
+        car_dict = {}
+        for car in Car.objects.all():
+            car_dict[car.pk]= {
+                'pk': car.pk,
+                'brand': car.brand,
+                'car_model': car.car_model,
+                'year': car.year,
+                'day': car.day,
+                'schedule': car.schedule
+            }
+
+        return render(
+            request,
+            'views.html',
+            {
+                'car_dict': car_dict,
+            }
+        )
 
 def home(response):
     return render(response, "home.html", {})

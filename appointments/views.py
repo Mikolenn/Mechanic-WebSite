@@ -118,8 +118,11 @@ def create(response):
 
             for car in Car.objects.all():
                 
-                if car.schedule == filled_form.cleaned_data['schedule']:
+                if (car.day == filled_form.cleaned_data['day'] and 
+                    car.schedule == filled_form.cleaned_data['schedule']):
+
                     repetido = True
+                    
             if repetido:
                 note='El horario no está disponible'
             else:

@@ -8,14 +8,22 @@ TRANSMISSION = [
 ]
 
 SCHEDULE = [
-    (8, '8:00 am'),
-    (9, '9:00 am'),
-    (10, '10:00 am'),
-    (11, '11:00 am'),
-    (1, '1:00 pm'),
-    (2, '2:00 pm'),
-    (3, '3:00 pm'),
-    (4, '4:00 pm'),
+    ('8:00 am', '8:00 am'),
+    ('9:00 am', '9:00 am'),
+    ('10:00 am', '10:00 am'),
+    ('11:00 am', '11:00 am'),
+    ('1:00 am', '1:00 pm'),
+    ('2:00 am', '2:00 pm'),
+    ('3:00 am', '3:00 pm'),
+    ('4:00 am', '4:00 pm'),
+]
+
+DAYS = [
+    ('Lunes', 'Lunes'),
+    ('Martes', 'Martes'),
+    ('Miércoles', 'Miércoles'),
+    ('Jueves', 'Jueves'),
+    ('Viernes', 'Viernes'),
 ]
 
 class Car(models.Model):
@@ -25,8 +33,8 @@ class Car(models.Model):
     transmission = models.CharField(max_length=1, choices=TRANSMISSION)
     year = models.PositiveIntegerField(blank=True)
     brand =  models.CharField(max_length=20)
-    schedule = models.PositiveIntegerField(choices=SCHEDULE)
-
+    day = models.CharField(max_length=10, choices=DAYS)
+    schedule = models.CharField(max_length=10, choices=SCHEDULE)
 
 
 class ToDoList(models.Model):

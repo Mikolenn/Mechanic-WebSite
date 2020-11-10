@@ -2,10 +2,28 @@
 
 {% block title %} View {% endblock %}
 
-
 {% block content %}
-  <h1>Tus citas</h1>
-  {% for td in user.car.all %}
-    <h2>{{td.brand}} {{td.car_model}}. Cita el {{td.day}} a las {{td.schedule}}</h2>
-  {% endfor %}
+  <div class="container">
+
+    <h1>Citas actuales</h1>
+    {% if brand and car_model and year and day and schedule %}
+
+    <h2>
+      Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}}
+      para el día {{day}} a las {{schedule}}
+    </h2>
+
+    {%else%}
+
+    {% for td in user.car.all %}
+        <a href="{% url 'view' td.pk %}">
+          <h3>
+            {{td.brand}} {{td.car_model}}, año {{td.year}}
+          </h3>
+        </a>
+      {% endfor %}
+
+    {% endif %}
+  </div>
+
 {%endblock%}

@@ -109,11 +109,11 @@ def index(response, id):
 
 def create(response):
     new_form = CarForm()
+    note = 'Ingrese los datos de su auto'
     if response.method == 'POST':
         filled_form = CarForm(response.POST)
 
         if filled_form.is_valid() and response.user.is_authenticated:
-            new_car = None
             repetido = False
 
             for car in Car.objects.all():
@@ -148,13 +148,10 @@ def create(response):
             response,
             'create.html',
             {
-                'carform':new_form,
+                'note': note,
+                'carform':new_form
             }
         )
-
-
-# def view(response):
-#     return render(response, "views.html", {})
 
 
 def view(request, pk=None):
@@ -163,7 +160,7 @@ def view(request, pk=None):
         try:
             car = Car.objects.get(pk=pk)
         except Car.DoesNotExist:
-            raise Http404('Pet with pk {} does not exist'.format(pk))
+            raise Http404('El auto con identificador {} no existe'.format(pk))
         return render(
             request,
             'views.html',

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+Create New car
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+	<h1>Crear una nueva cita</h1>
+
+	<h2>Ingrese los datos de su auto</h2>
+
+	<form action="{% url 'create' %}" method="post">
+		{% csrf_token %}
+		{% for field in carform%}
+		<div class="form-group">
+			{{field.label_tag}}
+			{% render_field field class="form-control" %}
+		</div>
+		{% endfor %}
+		<input type="submit" value="Añadir cita">
+
+	</form>
+
+
+</div>
+
+
+
+{% endblock %}

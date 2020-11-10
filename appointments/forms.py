@@ -15,6 +15,7 @@ class CarForm(forms.ModelForm):
             'car_model',
             'year',
             'transmission',
+            'day',
             'schedule'
             ]
         labels = {
@@ -23,6 +24,7 @@ class CarForm(forms.ModelForm):
             'car_model': 'Modelo',
             'year': 'Año',
             'transmission': 'Transmisión',
+            'day': 'Día',
             'schedule': 'Horario'
         }
     def __init__(self, *args, **kwargs):

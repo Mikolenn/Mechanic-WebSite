@@ -10,6 +10,7 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = [
+            'provider',
             'brand',
             'car_model',
             'year',
@@ -17,6 +18,7 @@ class CarForm(forms.ModelForm):
             'schedule'
             ]
         labels = {
+            'provider': 'Mecánico',
             'brand': 'Marca',
             'car_model': 'Modelo',
             'year': 'Año',

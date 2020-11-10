@@ -11,7 +11,7 @@ Crear nueva cita
 
 	<h1>Crear una nueva cita</h1>
 
-	<h2>Ingrese los datos de su auto</h2>
+	<h3>{{ note }}</h3>
 
 	<form action="{% url 'create' %}" method="post">
 		{% csrf_token %}

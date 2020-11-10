@@ -1,10 +1,44 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-
-
 from .models import Car, ToDoList, Item
 from .forms import CarForm, CreateNewList
+from django.contrib.admin.views.decorators import staff_member_required
 
+
+@staff_member_required
+def staff(request, pk=None):
+    if pk is not None:
+        try:
+            car = Car.objects.get(pk=pk)
+        except Car.DoesNotExist:
+            raise Http404('Pet with pk {} does not exist'.format(pk))
+        return render(
+            request,
+            'staff.html',
+            {
+                'object_brand': car.brand,
+                'object_car_model': car.car_model,
+                'object_year': car.year,
+            }
+        )
+
+    else:
+        car_dict = {}
+        for car in Car.objects.all():
+            car_dict[car.pk]= {
+                'pk': car.pk,
+                'brand': car.brand,
+                'model': car.car_model,
+                'year': car.year,
+            }
+
+        return render(
+            request,
+            'staff.html',
+            {
+                'car_dict': car_dict,
+            }
+        )
 
 
 def base(request):
@@ -36,11 +70,12 @@ def show(request, pk=None):
     else:
         car_dict = {}
         for car in Car.objects.all():
-            car_dict[car.brand]= {
+            car_dict[car.pk]= {
                 'pk': car.pk,
+                'brand': car.brand,
+                'model': car.car_model,
                 'year': car.year,
             }
-            print(car_dict)
 
         return render(
             request,
@@ -72,24 +107,23 @@ def index(response, id):
     return render(response, "index.html", {"ls": ls})
 
 
-
 def create(response):
     new_form = CarForm()
     if response.method == 'POST':
         filled_form = CarForm(response.POST)
 
-        if filled_form.is_valid and response.user.is_authenticated:
+        if filled_form.is_valid() and response.user.is_authenticated:
             new_car = None
             repetido = False
 
             for car in Car.objects.all():
-                new_car = filled_form.save()
-
-                if car.schedule == new_car.schedule:
+                
+                if car.schedule == filled_form.cleaned_data['schedule']:
                     repetido = True
             if repetido:
                 note='El horario no está disponible'
             else:
+                new_car = filled_form.save()
                 response.user.car.add(new_car)
                 note = (
                     'Se creo una cita para un carro {} {} a las {}\n'

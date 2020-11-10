@@ -1,27 +1,29 @@
 {% extends "base.html" %}
 
-{% block title %} View {% endblock %}
+{% block title %} Mecánico {% endblock %}
 
 
 {% block content %}
   <div class="container">
 
-    <h1>Citas actuales</h1>
-    {% if object_brand and object_car_model and object_year %}
-    <h2>
-      Bienvenido a la pagina del {{object_brand}} {{object_car_model}} del {{object_year}}
-    </h2>
+    <h1>Lista de autos por atender</h1>
+    {% if brand and car_model and year and pk and user%}
+      <h2>
+        Cita pendiente del {{brand}} {{car_model}} del {{year}}, 
+        con identificador {{pk}} y
+        propiedad de {{user}}. 
+        Mecánico encargado {{provider}}
+      </h2>
+
     {%else%}
 
-
-    <h2>Lista de autos por atender</h2>
-    {% for car_pk, values in car_dict.items %}
-      <a href="{% url 'staff' values.pk %}">
-        <h3>
-          {{values.brand}} {{values.model}}, year {{values.year}}
-        </h3>
-      </a>
-    {% endfor %}
+      {% for car_pk, values in car_dict.items %}
+        <a href="{% url 'staff' values.pk %}">
+          <h3>
+            {{values.brand}} {{values.car_model}}, year {{values.year}}
+          </h3>
+        </a>  
+      {% endfor %}
     {% endif %}
   </div>
 {%endblock%}

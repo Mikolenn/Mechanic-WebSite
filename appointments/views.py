@@ -11,26 +11,35 @@ def staff(request, pk=None):
         try:
             car = Car.objects.get(pk=pk)
         except Car.DoesNotExist:
-            raise Http404('Pet with pk {} does not exist'.format(pk))
+            raise Http404('El auto con identificador {} no existe'.format(pk))
         return render(
             request,
             'staff.html',
             {
-                'object_brand': car.brand,
-                'object_car_model': car.car_model,
-                'object_year': car.year,
+                'pk': car.pk,
+                'user': car.user,
+                'brand': car.brand,
+                'car_model': car.car_model,
+                'year': car.year,
+                'day': car.day,
+                'schedule': car.schedule,
+                'provider': car.provider
             }
         )
 
     else:
         car_dict = {}
         for car in Car.objects.all():
-            car_dict[car.pk]= {
-                'pk': car.pk,
-                'brand': car.brand,
-                'model': car.car_model,
-                'year': car.year,
-            }
+            if request.user == car.provider:
+                car_dict[car.pk]= {
+                    'pk': car.pk,
+                    'brand': car.brand,
+                    'car_model': car.car_model,
+                    'year': car.year,
+                    'day': car.day,
+                    'schedule': car.schedule,
+                    'provider': car.provider
+                }
 
         return render(
             request,

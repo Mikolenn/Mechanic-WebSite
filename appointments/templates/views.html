@@ -6,11 +6,12 @@
   <div class="container">
 
     <h1>Citas actuales</h1>
-    {% if brand and car_model and year and day and schedule %}
+    {% if brand and car_model and year and day and schedule and provider %}
 
     <h2>
       Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}}
-      para el día {{day}} a las {{schedule}}
+      para el día {{day}} a las {{schedule}}. <br> <br> 
+      Mecánico encargado: {{provider}}
     </h2>
 
     {%else%}

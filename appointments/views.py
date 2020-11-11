@@ -58,7 +58,6 @@ def new(request):
     return HttpResponse('Showing "new" page')
 
 
-
 def show(request, pk=None):
 
     if pk is not None:
@@ -127,7 +126,8 @@ def create(response):
 
             for car in Car.objects.all():
                 
-                if (car.day == filled_form.cleaned_data['day'] and 
+                if (car.provider == filled_form.cleaned_data['provider'] and
+                    car.day == filled_form.cleaned_data['day'] and 
                     car.schedule == filled_form.cleaned_data['schedule']):
 
                     repetido = True
@@ -138,7 +138,7 @@ def create(response):
                 new_car = filled_form.save()
                 response.user.car.add(new_car)
                 note = (
-                    'Se creo una cita para un carro {} {} a las {}\n'
+                    'La cita se creó con éxito'
                     .format(new_car.brand, new_car.car_model,
                     new_car.schedule)
                 )
@@ -178,7 +178,8 @@ def view(request, pk=None):
                 'car_model': car.car_model,
                 'year': car.year,
                 'day': car.day,
-                'schedule': car.schedule
+                'schedule': car.schedule,
+                'provider': car.provider
             }
         )
 
@@ -201,6 +202,7 @@ def view(request, pk=None):
                 'car_dict': car_dict,
             }
         )
+
 
 def home(response):
     return render(response, "home.html", {})

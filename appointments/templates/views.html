@@ -9,9 +9,9 @@
     {% if brand and car_model %}
 
     <h2>
-      Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}}
-      para el día {{day}} a las {{schedule}} <br> <br>
-      Mecánico encargado: {{provider}} <br> <br>
+      <br> Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}} <br>
+      <br> Horario: {{day}}, {{schedule}} <br>
+      <br> Mecánico encargado: {{provider}} <br> <br>
     </h2>
     <a href="{% url 'create' pk %}">
       <h3>

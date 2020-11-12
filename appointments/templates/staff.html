@@ -9,10 +9,9 @@
     <h1>Lista de autos por atender</h1>
     {% if brand and car_model %}
       <h2>
-        Cita pendiente del {{brand}} {{car_model}} del {{year}},
-        con identificador {{pk}} y
-        propiedad de {{user}}.
-        Mecánico encargado {{provider}}
+        <br> Cita pendiente de atender: {{brand}} {{car_model}} del {{year}} <br>
+        <br> Identificador: {{pk}} <br> 
+        <br> Propiedad de {{user}} <br> <br>
       </h2>
     <a href="{% url 'create' pk %}">
       <h3>

@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Car, ToDoList, Item
-from .forms import CarForm, CreateNewList
+from .forms import CarForm, CreateNewList, CarStaffForm
 from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import get_object_or_404, redirect
 
 
 @staff_member_required
@@ -115,93 +116,133 @@ def index(response, id):
     return render(response, "index.html", {"ls": ls})
 
 
-def create(response):
-    new_form = CarForm()
-    note = 'Ingrese los datos de su auto'
-    if response.method == 'POST':
-        filled_form = CarForm(response.POST)
+def delete(response, pk=None):
+    if pk is not None:
+        instance = get_object_or_404(Car, pk=pk)
+        instance.delete()
+        return redirect('view')
 
-        if filled_form.is_valid() and response.user.is_authenticated:
-            repetido = False
+    else:
+        return redirect('view')
 
-            for car in Car.objects.all():
-                
-                if (car.provider == filled_form.cleaned_data['provider'] and
-                    car.day == filled_form.cleaned_data['day'] and 
-                    car.schedule == filled_form.cleaned_data['schedule']):
 
-                    repetido = True
-                    
-            if repetido:
-                note = 'El horario no está disponible'
-            else:
-                new_car = filled_form.save()
-                response.user.car.add(new_car)
-                note = (
-                    'La cita se creó con éxito'
-                    .format(new_car.brand, new_car.car_model,
-                    new_car.schedule)
-                )
-        else:
-            note='formulario inválido'
+def create(response, pk=None):
+
+    if pk is not None:
+        instance = get_object_or_404(Car, pk=pk)
+        form = CarForm(response.POST or None, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('view')
         return render(
             response,
-            'create.html',
+            'change.html',
             {
-                'carform':new_form,
-                'note': note
+                'carform':form,
+                'pk':pk,
             }
         )
     else:
-        return render(
-            response,
-            'create.html',
-            {
-                'note': note,
-                'carform':new_form
-            }
-        )
+        if response.user.is_staff:
+            new_form = CarStaffForm()
+        else:
+            new_form = CarForm()
+        note = 'Ingrese los datos de su auto'
+        if response.method == 'POST':
+            if response.user.is_staff:
+                filled_form = CarStaffForm(response.POST)
+            else:
+                filled_form = CarForm(response.POST)
+
+            if filled_form.is_valid() and response.user.is_authenticated:
+                repetido = False
+
+                for car in Car.objects.all():
+
+                    if (car.provider == filled_form.cleaned_data['provider'] and
+                        car.day == filled_form.cleaned_data['day'] and
+                        car.schedule == filled_form.cleaned_data['schedule']):
+
+                        repetido = True
+
+                if repetido:
+                    note = 'El horario no está disponible'
+                else:
+                    new_car = filled_form.save()
+                    if response.user.is_staff:
+                        pass
+                    else:
+                        response.user.car.add(new_car)
+                    note = (
+                        'La cita se creó con éxito'
+                        .format(new_car.brand, new_car.car_model,
+                        new_car.schedule)
+                    )
+            else:
+                note='formulario inválido'
+            return render(
+                response,
+                'create.html',
+                {
+                    'carform':new_form,
+                    'note': note
+                }
+            )
+        else:
+            return render(
+                response,
+                'create.html',
+                {
+                    'note': note,
+                    'carform':new_form
+                }
+            )
 
 
 def view(request, pk=None):
 
-    if pk is not None:
-        try:
-            car = Car.objects.get(pk=pk)
-        except Car.DoesNotExist:
-            raise Http404('El auto con identificador {} no existe'.format(pk))
-        return render(
-            request,
-            'views.html',
-            {
-                'brand': car.brand,
-                'car_model': car.car_model,
-                'year': car.year,
-                'day': car.day,
-                'schedule': car.schedule,
-                'provider': car.provider
-            }
-        )
-
+    if request.user.is_staff:
+        return redirect('staff')
     else:
-        car_dict = {}
-        for car in Car.objects.all():
-            car_dict[car.pk]= {
-                'pk': car.pk,
-                'brand': car.brand,
-                'car_model': car.car_model,
-                'year': car.year,
-                'day': car.day,
-                'schedule': car.schedule
-            }
 
-        return render(
-            request,
-            'views.html',
-            {
-                'car_dict': car_dict,
-            }
-        )
+        if pk is not None:
+            try:
+                car = Car.objects.get(pk=pk)
+            except Car.DoesNotExist:
+                raise Http404('El auto con identificador {} no existe'.format(pk))
+            return render(
+                request,
+                'views.html',
+                {
+                    'pk': car.pk,
+                    'brand': car.brand,
+                    'car_model': car.car_model,
+                    'year': car.year,
+                    'day': car.day,
+                    'schedule': car.schedule,
+                    'provider': car.provider
+                }
+            )
+
+        else:
+            car_dict = {}
+            for car in Car.objects.all():
+                car_dict[car.pk]= {
+                    'pk': car.pk,
+                    'brand': car.brand,
+                    'car_model': car.car_model,
+                    'year': car.year,
+                    'day': car.day,
+                    'schedule': car.schedule
+                }
+
+            return render(
+                request,
+                'views.html',
+                {
+                    'car_dict': car_dict,
+                }
+            )
 
 
 def home(response):

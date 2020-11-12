@@ -30,3 +30,35 @@ class CarForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
         self.fields['provider'].queryset= User.objects.filter(is_staff=True)
+
+class CreateNewList(forms.Form):
+	name = forms.CharField(label="Name ", max_length=300)
+
+class CarStaffForm(forms.ModelForm,):
+
+    class Meta:
+        model = Car
+        fields = [
+			'user',
+            'provider',
+            'brand',
+            'car_model',
+            'year',
+            'transmission',
+            'day',
+            'schedule'
+            ]
+        labels = {
+			'user':'Cliente',
+            'provider': 'Mecánico',
+            'brand': 'Marca',
+            'car_model': 'Modelo',
+            'year': 'Año',
+            'transmission': 'Transmisión',
+            'day': 'Día',
+            'schedule': 'Horario'
+        }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args,**kwargs)
+        self.fields['provider'].queryset= User.objects.filter(is_staff=True)
+        self.fields['user'].queryset= User.objects.filter(is_staff= False)

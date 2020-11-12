@@ -10,9 +10,21 @@
 
     <h2>
       Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}}
-      para el día {{day}} a las {{schedule}}. <br> <br> 
+      para el día {{day}} a las {{schedule}}. <br> <br>
       Mecánico encargado: {{provider}}
     </h2>
+    <a href="{% url 'create' pk %}">
+      <h3>
+        MODIFICAR
+      </h3>
+    </a>
+
+    <a href="{% url 'delete' pk %}">
+      <h3>
+        ELIMINAR
+      </h3>
+    </a>
+
 
     {%else%}
 

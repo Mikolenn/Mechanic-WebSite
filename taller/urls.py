@@ -17,4 +17,8 @@ urlpatterns = [
     path('view/', views.view, name='view'),
     path('view/<int:pk>', views.view, name='view'),
     path('create/', views.create, name='create'),
+    path('create/<int:pk>', views.create, name='create'),
+    path('delete/', views.delete, name='delete'),
+    path('delete/<int:pk>', views.delete, name='delete'),
+
 ]

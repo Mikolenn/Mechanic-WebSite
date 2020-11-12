@@ -141,7 +141,7 @@ def create(response, pk=None):
                         'La cita se creó con éxito'
                     )
             else:
-                note='formulario inválido'
+                note='Formulario inválido. Verifique el ingreso a su cuenta y los datos ingresados'
             return render(
                 response,
                 'create.html',

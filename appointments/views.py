@@ -59,63 +59,6 @@ def new(request):
     return HttpResponse('Showing "new" page')
 
 
-def show(request, pk=None):
-
-    if pk is not None:
-        try:
-            car = Car.objects.get(pk=pk)
-        except Car.DoesNotExist:
-            raise Http404('Pet with pk {} does not exist'.format(pk))
-        return render(
-            request,
-            'show.html',
-            {
-                'object_brand': car.brand,
-                'object_car_model': car.car_model,
-                'object_year': car.year,
-            }
-        )
-
-    else:
-        car_dict = {}
-        for car in Car.objects.all():
-            car_dict[car.pk]= {
-                'pk': car.pk,
-                'brand': car.brand,
-                'model': car.car_model,
-                'year': car.year,
-            }
-
-        return render(
-            request,
-            'show.html',
-            {
-                'car_dict': car_dict,
-            }
-        )
-
-def index(response, id):
-    ls = ToDoList.objects.get(id=id)
-    if response.method == "POST":
-        if response.POST.get("save"):
-            for item in ls.item_set.all():
-               if response.POST.get("c" + str(item.id)) == "clicked":
-                   item.complete = True
-               else:
-                   item.complete = False
-
-               item.save()
-
-        elif response.POST.get("newItem"):
-            txt= response.POST.get("new")
-            if len(txt)>2:
-                ls.item_set.create(text=txt, complete =False)
-            else:
-                print("invalid")
-
-    return render(response, "index.html", {"ls": ls})
-
-
 def delete(response, pk=None):
     if pk is not None:
         instance = get_object_or_404(Car, pk=pk)
@@ -131,15 +74,36 @@ def create(response, pk=None):
     if pk is not None:
         instance = get_object_or_404(Car, pk=pk)
         form = CarForm(response.POST or None, instance=instance)
+
         if form.is_valid():
-            form.save()
-            return redirect('view')
+            unique=True
+
+            for car in Car.objects.all():
+                
+                if (car.provider == form.cleaned_data['provider'] and
+                    car.day == form.cleaned_data['day'] and
+                    car.schedule == form.cleaned_data['schedule']):
+
+                    unique=False
+                    note = 'Horario no disponible'
+                
+            if unique:    
+                form.save()
+                note = 'Modificado con éxito'
+
+            return render(
+                response,
+                'views.html',
+                {
+                    'note':note
+                }
+            )
         return render(
             response,
             'change.html',
             {
-                'carform':form,
-                'pk':pk,
+                'carform': form,
+                'pk': pk
             }
         )
     else:
@@ -175,8 +139,6 @@ def create(response, pk=None):
                         response.user.car.add(new_car)
                     note = (
                         'La cita se creó con éxito'
-                        .format(new_car.brand, new_car.car_model,
-                        new_car.schedule)
                     )
             else:
                 note='formulario inválido'

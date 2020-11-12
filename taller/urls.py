@@ -6,8 +6,6 @@ from register import views as viewsR
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('show/', views.show, name='show'),
-    path('show/<int:pk>', views.show, name='show'),
     path('staff/', views.staff, name='staff'),
     path('staff/<int:pk>', views.staff, name='staff'),
     path('new/', views.new, name='new'),

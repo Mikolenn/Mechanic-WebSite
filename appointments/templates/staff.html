@@ -7,7 +7,7 @@
   <div class="container">
 
     <h1>Lista de autos por atender</h1>
-    {% if brand and car_model and year and pk and user%}
+    {% if brand and car_model %}
       <h2>
         Cita pendiente del {{brand}} {{car_model}} del {{year}},
         con identificador {{pk}} y
@@ -16,13 +16,13 @@
       </h2>
     <a href="{% url 'create' pk %}">
       <h3>
-        MODIFICAR
+        Modificar
       </h3>
     </a>
 
     <a href="{% url 'delete' pk %}">
       <h3>
-        ELIMINAR
+        Eliminar
       </h3>
     </a>
 

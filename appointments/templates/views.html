@@ -6,29 +6,37 @@
   <div class="container">
 
     <h1>Citas actuales</h1>
-    {% if brand and car_model and year and day and schedule and provider %}
+    {% if brand and car_model %}
 
     <h2>
       Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}}
-      para el día {{day}} a las {{schedule}}. <br> <br>
-      Mecánico encargado: {{provider}}
+      para el día {{day}} a las {{schedule}} <br> <br>
+      Mecánico encargado: {{provider}} <br> <br>
     </h2>
     <a href="{% url 'create' pk %}">
       <h3>
-        MODIFICAR
+        Modificar
       </h3>
     </a>
 
     <a href="{% url 'delete' pk %}">
       <h3>
-        ELIMINAR
+        Eliminar
       </h3>
     </a>
 
 
-    {%else%}
+    {% else %}
 
-    {% for td in user.car.all %}
+      {% if note %}
+
+      <h3>
+        {{note}}
+      </h3>
+
+      {%endif%}
+
+      {% for td in user.car.all %}
         <a href="{% url 'view' td.pk %}">
           <h3>
             {{td.brand}} {{td.car_model}}, año {{td.year}}

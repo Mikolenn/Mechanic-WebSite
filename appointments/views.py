@@ -23,6 +23,7 @@ def staff(request, pk=None):
                 'car_model': car.car_model,
                 'year': car.year,
                 'schedule': car.schedule,
+                'date': car.date,
                 'provider': car.provider
             }
         )
@@ -36,8 +37,6 @@ def staff(request, pk=None):
                     'brand': car.brand,
                     'car_model': car.car_model,
                     'year': car.year,
-                    'schedule': car.schedule,
-                    'provider': car.provider
                 }
 
         return render(
@@ -75,6 +74,7 @@ def create(response, pk=None):
             for car in Car.objects.all():
                 
                 if (car.provider == form.cleaned_data['provider'] and
+                    car.date == form.cleaned_data['date'] and
                     car.schedule == form.cleaned_data['schedule']):
 
                     unique=False
@@ -117,6 +117,7 @@ def create(response, pk=None):
                 for car in Car.objects.all():
 
                     if (car.provider == filled_form.cleaned_data['provider'] and
+                        car.date == filled_form.cleaned_data['date'] and
                         car.schedule == filled_form.cleaned_data['schedule']):
 
                         repetido = True
@@ -201,3 +202,22 @@ def view(request, pk=None):
 
 def home(response):
     return render(response, "home.html", {})
+
+
+def available(request):
+
+    car_dict = {}
+    for car in Car.objects.all():
+        car_dict[car.pk]= {
+            'pk': car.pk,
+            'date': car.date,
+            'schedule': car.schedule
+        }
+
+    return render(
+        request,
+        'available.html',
+        {
+            'car_dict': car_dict
+        }
+    )

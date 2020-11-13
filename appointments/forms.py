@@ -74,7 +74,8 @@ class CarStaffForm(forms.ModelForm,):
             'car_model',
             'year',
             'transmission',
-            'schedule'
+            'schedule',
+            'date'
             ]
         labels = {
 			'user':'Cliente',
@@ -83,7 +84,8 @@ class CarStaffForm(forms.ModelForm,):
             'car_model': 'Modelo',
             'year': 'Año',
             'transmission': 'Transmisión',
-            'schedule': 'Horario'
+            'schedule': 'Horario',
+            'date': 'Fecha'
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)

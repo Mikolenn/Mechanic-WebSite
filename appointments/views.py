@@ -22,7 +22,6 @@ def staff(request, pk=None):
                 'brand': car.brand,
                 'car_model': car.car_model,
                 'year': car.year,
-                'day': car.day,
                 'schedule': car.schedule,
                 'provider': car.provider
             }
@@ -37,7 +36,6 @@ def staff(request, pk=None):
                     'brand': car.brand,
                     'car_model': car.car_model,
                     'year': car.year,
-                    'day': car.day,
                     'schedule': car.schedule,
                     'provider': car.provider
                 }
@@ -77,7 +75,6 @@ def create(response, pk=None):
             for car in Car.objects.all():
                 
                 if (car.provider == form.cleaned_data['provider'] and
-                    car.day == form.cleaned_data['day'] and
                     car.schedule == form.cleaned_data['schedule']):
 
                     unique=False
@@ -120,7 +117,6 @@ def create(response, pk=None):
                 for car in Car.objects.all():
 
                     if (car.provider == filled_form.cleaned_data['provider'] and
-                        car.day == filled_form.cleaned_data['day'] and
                         car.schedule == filled_form.cleaned_data['schedule']):
 
                         repetido = True
@@ -176,8 +172,8 @@ def view(request, pk=None):
                     'brand': car.brand,
                     'car_model': car.car_model,
                     'year': car.year,
-                    'day': car.day,
                     'schedule': car.schedule,
+                    'date': car.date,
                     'provider': car.provider
                 }
             )
@@ -190,8 +186,8 @@ def view(request, pk=None):
                     'brand': car.brand,
                     'car_model': car.car_model,
                     'year': car.year,
-                    'day': car.day,
-                    'schedule': car.schedule
+                    'schedule': car.schedule,
+                    'date': car.date
                 }
 
             return render(

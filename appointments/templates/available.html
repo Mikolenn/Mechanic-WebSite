@@ -1,18 +1,17 @@
 {% extends "base.html" %}
-{% load widget_tweaks %}
 
 {% block title %}
 Citas no disponibles
 {% endblock %}
 
-{% block contents %}
+{% block content %}
   <div class="container">
 
     <h1>Citas actualmente no disponibles</h1>
 
     {% for car_pk, values in car_dict.items %}
         <h3>
-        {{car_pk}} {{values.date}} {{values.schedule}}
+        {{values.date}}, {{values.schedule}}
         </h3>
     {% endfor %}
   

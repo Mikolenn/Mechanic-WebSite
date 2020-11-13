@@ -36,14 +36,14 @@ def staff(request, pk=None):
                     'pk': car.pk,
                     'brand': car.brand,
                     'car_model': car.car_model,
-                    'year': car.year,
+                    'year': car.year
                 }
 
         return render(
             request,
             'staff.html',
             {
-                'car_dict': car_dict,
+                'car_dict': car_dict
             }
         )
 
@@ -204,7 +204,7 @@ def home(response):
     return render(response, "home.html", {})
 
 
-def available(request):
+def available(response):
 
     car_dict = {}
     for car in Car.objects.all():
@@ -215,7 +215,7 @@ def available(request):
         }
 
     return render(
-        request,
+        response,
         'available.html',
         {
             'car_dict': car_dict

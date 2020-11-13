@@ -1,11 +1,17 @@
 from django import forms
 from .models import Car
 from django.contrib.auth.models import User
+from django.forms.widgets import SelectDateWidget
 
-class CreateNewList(forms.Form):
-	name = forms.CharField(label="Name ", max_length=300)
+
 
 class CarForm(forms.ModelForm):
+
+    date = forms.DateField(
+                widget=SelectDateWidget(
+                    empty_label=("Año", "Mes", "Día")
+                )
+            )
 
     class Meta:
         model = Car
@@ -31,8 +37,6 @@ class CarForm(forms.ModelForm):
         super().__init__(*args,**kwargs)
         self.fields['provider'].queryset= User.objects.filter(is_staff=True)
 
-class CreateNewList(forms.Form):
-	name = forms.CharField(label="Name ", max_length=300)
 
 class CarStaffForm(forms.ModelForm,):
 

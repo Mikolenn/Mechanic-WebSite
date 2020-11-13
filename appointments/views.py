@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Car, ToDoList, Item
-from .forms import CarForm, CreateNewList, CarStaffForm
+from .models import Car
+from .forms import CarForm, CarStaffForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, redirect
 
@@ -53,10 +53,6 @@ def staff(request, pk=None):
 
 def base(request):
     return render(request,'base.html',{})
-
-
-def new(request):
-    return HttpResponse('Showing "new" page')
 
 
 def delete(response, pk=None):

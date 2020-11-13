@@ -18,13 +18,6 @@ SCHEDULE = [
     ('4:00 pm', '4:00 pm'),
 ]
 
-DAYS = [
-    ('Lunes', 'Lunes'),
-    ('Martes', 'Martes'),
-    ('Miércoles', 'Miércoles'),
-    ('Jueves', 'Jueves'),
-    ('Viernes', 'Viernes'),
-]
 
 class Car(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="car", null=True)
@@ -33,6 +26,5 @@ class Car(models.Model):
     transmission = models.CharField(max_length=1, choices=TRANSMISSION)
     year = models.PositiveIntegerField(blank=True)
     brand =  models.CharField(max_length=20)
-    day = models.CharField(max_length=10, choices=DAYS)
     schedule = models.CharField(max_length=10, choices=SCHEDULE)
     date = models.DateField(null=True, blank=False)

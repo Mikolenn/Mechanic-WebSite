@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.forms.widgets import SelectDateWidget
 
 
-
 class CarForm(forms.ModelForm):
 
     date = forms.DateField(
@@ -21,8 +20,8 @@ class CarForm(forms.ModelForm):
             'car_model',
             'year',
             'transmission',
-            'day',
-            'schedule'
+            'schedule',
+            'date'
             ]
         labels = {
             'provider': 'Mecánico',
@@ -30,8 +29,8 @@ class CarForm(forms.ModelForm):
             'car_model': 'Modelo',
             'year': 'Año',
             'transmission': 'Transmisión',
-            'day': 'Día',
-            'schedule': 'Horario'
+            'schedule': 'Horario',
+            'date': 'Fecha'
         }
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
@@ -39,6 +38,12 @@ class CarForm(forms.ModelForm):
 
 
 class CarStaffForm(forms.ModelForm,):
+
+    date = forms.DateField(
+                widget=SelectDateWidget(
+                    empty_label=("Año", "Mes", "Día")
+                )
+            )
 
     class Meta:
         model = Car
@@ -49,7 +54,6 @@ class CarStaffForm(forms.ModelForm,):
             'car_model',
             'year',
             'transmission',
-            'day',
             'schedule'
             ]
         labels = {
@@ -59,7 +63,6 @@ class CarStaffForm(forms.ModelForm,):
             'car_model': 'Modelo',
             'year': 'Año',
             'transmission': 'Transmisión',
-            'day': 'Día',
             'schedule': 'Horario'
         }
     def __init__(self, *args, **kwargs):

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+
 {% block title %}
 Crear nueva cita
 {% endblock %}
@@ -12,6 +13,12 @@ Crear nueva cita
 	<h1>Crear una nueva cita</h1>
 
 	<h3>{{ note }}</h3>
+
+	<a href="{% url 'available' %}">
+		<h5>
+		  Citas no disponibles
+		</h5>
+	  </a>
 
 	<form action="{% url 'create' %}" method="post">
 		{% csrf_token %}

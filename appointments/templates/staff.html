@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %} Mecánico {% endblock %}
+{% block title %}
+Mecánico
+{% endblock %}
 
 
 {% block content %}
@@ -10,7 +12,8 @@
     {% if brand and car_model %}
       <h2>
         <br> Cita pendiente de atender: {{brand}} {{car_model}} del {{year}} <br>
-        <br> Identificador: {{pk}} <br> 
+        <br> Identificador: {{pk}} <br>
+        <br> Fecha: {{date}} <br>
         <br> Propiedad de {{user}} <br> <br>
       </h2>
     <a href="{% url 'create' pk %}">

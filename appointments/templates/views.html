@@ -1,10 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %} View {% endblock %}
-
+{% block title %}
+Citas
+{% endblock %}
 
 {% block content %}
-  {% for td in user.car.all %}
-    <p>{{td.car_model}}</p>
-  {% endfor %}
+  <div class="container">
+
+    <h1>Citas actuales</h1>
+    {% if brand and car_model %}
+
+    <h2>
+      <br> Usted tiene una cita pendiente, para un {{brand}} {{car_model}} del {{year}} <br>
+      <br> Fecha: {{date}} <br>
+      <br> Hora: {{schedule}} <br>
+      <br> Mecánico encargado: {{provider}} <br> <br>
+    </h2>
+    <a href="{% url 'create' pk %}">
+      <h3>
+        Modificar
+      </h3>
+    </a>
+
+    <a href="{% url 'delete' pk %}">
+      <h3>
+        Eliminar
+      </h3>
+    </a>
+
+
+    {% else %}
+
+      {% if note %}
+
+      <h3>
+        {{note}}
+      </h3>
+
+      {%endif%}
+
+      {% for td in user.car.all %}
+        <a href="{% url 'view' td.pk %}">
+          <h3>
+            {{td.brand}} {{td.car_model}}, año {{td.year}}
+          </h3>
+        </a>
+      {% endfor %}
+
+    {% endif %}
+  </div>
+
 {%endblock%}

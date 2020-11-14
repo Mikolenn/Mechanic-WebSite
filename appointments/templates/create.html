@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+
 {% block title %}
-Create New car
+Crear nueva cita
 {% endblock %}
 
 
@@ -9,9 +10,15 @@ Create New car
 {% block content %}
 <div class="container">
 
-	<h1>Create new car</h1>
+	<h1>Crear una nueva cita</h1>
 
-	<h2>Hola</h2>
+	<h3>{{ note }}</h3>
+
+	<a href="{% url 'available' %}">
+		<h5>
+		  Citas no disponibles
+		</h5>
+	  </a>
 
 	<form action="{% url 'create' %}" method="post">
 		{% csrf_token %}
@@ -21,7 +28,7 @@ Create New car
 			{% render_field field class="form-control" %}
 		</div>
 		{% endfor %}
-		<input type="submit" value="New Car Object">
+		<input type="submit" value="Añadir cita">
 
 	</form>
 

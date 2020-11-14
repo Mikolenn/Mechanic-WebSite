@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+Crear nueva cita
+{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+
+	<h1>Modificar cita</h1>
+
+	<h3>{{ note }}</h3>
+
+	<form action="{% url 'create' pk%}" method="post">
+		{% csrf_token %}
+		{% for field in carform%}
+		<div class="form-group">
+			{{field.label_tag}}
+			{% render_field field class="form-control" %}
+		</div>
+		{% endfor %}
+		<input type="submit" value="Añadir cita">
+
+	</form>
+
+
+</div>
+
+
+
+{% endblock %}

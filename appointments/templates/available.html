@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Citas no disponibles
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+
+    <h1>Citas actualmente no disponibles</h1>
+
+    {% for pk, user in user_dict.items %}
+        <h2>
+        {{user.first_name}} {{user.last_name}}
+        </h2>
+
+        {% for pk, car in car_dict.items %}
+          {% if user.user_name == car.provider %}
+
+            <h4>
+              {{car.date}}, {{car.schedule}}
+            </h4>
+
+          {% endif %}
+        {% endfor %}
+
+    {% endfor %}
+  
+  </div>
+
+{% endblock %}

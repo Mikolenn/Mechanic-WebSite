@@ -4,6 +4,7 @@ from .models import Car
 from .forms import CarForm, CarStaffForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.models import User
 
 
 @staff_member_required
@@ -72,15 +73,15 @@ def create(response, pk=None):
             unique=True
 
             for car in Car.objects.all():
-                
+
                 if (car.provider == form.cleaned_data['provider'] and
-                    car.date == form.cleaned_data['date'] and
-                    car.schedule == form.cleaned_data['schedule']):
+                        car.date == form.cleaned_data['date'] and
+                        car.schedule == form.cleaned_data['schedule']):
 
                     unique=False
                     note = 'Horario no disponible'
-                
-            if unique:    
+
+            if unique:
                 form.save()
                 note = 'Modificado con éxito'
 
@@ -206,10 +207,23 @@ def home(response):
 
 def available(response):
 
+    user_dict = {}
+    for user in User.objects.all():
+
+        if user.is_staff:
+            user_dict[user.pk]= {
+                'pk': user.pk,
+                'user_name': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name
+            }
+
     car_dict = {}
     for car in Car.objects.all():
+
         car_dict[car.pk]= {
             'pk': car.pk,
+            'provider': car.provider,
             'date': car.date,
             'schedule': car.schedule
         }
@@ -218,6 +232,7 @@ def available(response):
         response,
         'available.html',
         {
+            'user_dict': user_dict,
             'car_dict': car_dict
         }
     )

@@ -9,10 +9,21 @@ Citas no disponibles
 
     <h1>Citas actualmente no disponibles</h1>
 
-    {% for car_pk, values in car_dict.items %}
-        <h3>
-        {{values.date}}, {{values.schedule}}
-        </h3>
+    {% for pk, user in user_dict.items %}
+        <h2>
+        {{user.first_name}} {{user.last_name}}
+        </h2>
+
+        {% for pk, car in car_dict.items %}
+          {% if user.user_name == car.provider %}
+
+            <h4>
+              {{car.date}}, {{car.schedule}}
+            </h4>
+
+          {% endif %}
+        {% endfor %}
+
     {% endfor %}
   
   </div>

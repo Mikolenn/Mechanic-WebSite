@@ -223,7 +223,7 @@ def available(response):
 
         car_dict[car.pk]= {
             'pk': car.pk,
-            'provider': car.provider,
+            'provider': str(car.provider),
             'date': car.date,
             'schedule': car.schedule
         }

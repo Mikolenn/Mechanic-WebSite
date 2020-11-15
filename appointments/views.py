@@ -19,10 +19,12 @@ def staff(request, pk=None):
             'staff.html',
             {
                 'pk': car.pk,
-                'user': car.user,
+                'user_first_name': car.user.first_name,
+                'user_last_name': car.user.last_name,
                 'brand': car.brand,
                 'car_model': car.car_model,
                 'year': car.year,
+                'transmision': car.transmission,
                 'schedule': car.schedule,
                 'date': car.date,
                 'provider': car.provider
@@ -176,7 +178,8 @@ def view(request, pk=None):
                     'year': car.year,
                     'schedule': car.schedule,
                     'date': car.date,
-                    'provider': car.provider
+                    'provider_f_n': car.provider.first_name,
+                    'provider_l_n': car.provider.last_name
                 }
             )
 

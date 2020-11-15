@@ -24,7 +24,7 @@ class Car(models.Model):
     provider = models.ForeignKey(User,on_delete=models.CASCADE,related_name="provider", null=True)
     car_model = models.CharField(max_length=20)
     transmission = models.CharField(max_length=1, choices=TRANSMISSION)
-    year = models.PositiveIntegerField(blank=True)
+    year = models.CharField(max_length=20)
     brand =  models.CharField(max_length=20)
     schedule = models.CharField(max_length=10, choices=SCHEDULE)
     date = models.DateField(null=True, blank=False)

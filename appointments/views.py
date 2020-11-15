@@ -202,7 +202,7 @@ def view(request, pk=None):
 
 
 def home(response):
-    return render(response, "home.html", {})
+    return render(response, "index.html", {})
 
 
 def available(response):

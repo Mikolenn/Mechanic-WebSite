@@ -46,10 +46,10 @@
 
 							{% if brand and car_model %}
 								<h2>
-									<br> Cita pendiente de atender: {{brand}} {{car_model}} del {{year}} <br>
+									<br> Cita pendiente de atender: {{brand}} {{car_model}} del {{year}}, {{transmision}} <br>
 									<br> Identificador: {{pk}} <br>
 									<br> Fecha: {{date}} <br>
-									<br> Propiedad de {{user}} <br> <br>
+									<br> Propiedad de {{user_first_name}} {{user_last_name}} <br> <br>
 								</h2>
 							<a href="{% url 'create' pk %}">
 								<h3>

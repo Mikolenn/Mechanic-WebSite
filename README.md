@@ -21,12 +21,12 @@ Register: Se utiliza para hacer el registro, login y logout de los usuarios.
 
 Para correr el proyecto mediante el Dockerfile, ejecutar los comandos:
 
-$ sudo docker build --tag website:latest .
+$ sudo docker build --tag web:latest .
 
-$ sudo docker run -ti website:latest bash
+$ sudo docker run -p 80:80 web:latest
 
-Una vez en el bash, ejecute el comando:
+Una vez en aqui, se puede ingresar a la direccion "localhost" directamente en la barra de direcciones
 
-$ python3 manage.py runserver 0.0.0.0:8000
+
 
 

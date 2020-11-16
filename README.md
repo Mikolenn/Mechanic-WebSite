@@ -13,6 +13,7 @@ Este es el repositorio para el desarrollo del proyecto de la página web, median
 Para correr el proyecto mediante el Dockerfile, ejecutar los comandos:
 
 $ sudo docker build --tag website:latest .
+
 $ sudo docker run -ti website:latest bash
 
 Una vez en el bash, ejecute el comando:

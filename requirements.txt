@@ -1,5 +1,0 @@
-Django==3.1
-gunicorn==20.0.4
-django-widget-tweaks
-django-crispy-forms
-psycopg2-binary>=2.8

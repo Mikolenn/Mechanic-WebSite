@@ -10,6 +10,15 @@ Luis Guillermo Ramírez, B76222.
 
 Este es el repositorio para el desarrollo del proyecto de la página web, mediante la cual se permite el manejo de citas para un taller mecánico.
 
+La pagina web se compone de dos apps que son Appointments y Register.
+
+Appointments: Se trata de el app principal que se encarga de realizar la creación, eliminación y modificación de citas para el sitio 
+web de citas.
+
+Register: Se utiliza para hacer el registro, login y logout de los usuarios.
+
+----------------------------------------------------------------------------------
+
 Para correr el proyecto mediante el Dockerfile, ejecutar los comandos:
 
 $ sudo docker build --tag website:latest .
@@ -19,3 +28,5 @@ $ sudo docker run -ti website:latest bash
 Una vez en el bash, ejecute el comando:
 
 $ python3 manage.py runserver 0.0.0.0:8000
+
+

@@ -4,6 +4,7 @@ from django.urls import path, include
 from appointments import views
 from register import views as viewsR
 
+# Urls del proyecto
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('staff/', views.staff, name='staff'),

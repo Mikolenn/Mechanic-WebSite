@@ -1,3 +1,3 @@
-from django.db import models
+# from django.db import models
 
-# Create your models here.
+# Modelos para el registro. Innecesarios para el proyecto

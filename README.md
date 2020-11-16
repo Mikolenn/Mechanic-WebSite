@@ -12,9 +12,9 @@ Este es el repositorio para el desarrollo del proyecto de la página web, median
 
 Para correr el proyecto mediante el Dockerfile, ejecutar los comandos:
 
-$ docker-compose build
-$ docker-compose up
+$ sudo docker build --tag website:latest .
+$ sudo docker run -ti website:latest bash
 
-Debe tener docker-compose instalado. En caso de no tenerlo, corra el comando:
+Una vez en el bash, ejecute el comando:
 
-$ sudo apt install docker-compose
+$ python3 manage.py runserver 0.0.0.0:8000

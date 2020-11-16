@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from django.forms.widgets import SelectDateWidget
 
 
+# Formulario empleado para el registro de las citas de los usuarios estándar
+
 class CarForm(forms.ModelForm):
+
+    # Diccionario para los meses del widget
 
     MONTHS = {
         1: ('Enero'), 2: ('Febrero'),
@@ -15,12 +19,17 @@ class CarForm(forms.ModelForm):
         11: ('Noviembre'), 12: ('Diciembre')
     }
 
-    date = forms.DateField(label='Fecha',
-                widget=SelectDateWidget(
-                    empty_label=("Año", "Mes", "Día"),
-                    months=MONTHS
-                )
+    # Espacio del formulario que emplea widget
+
+    date = forms.DateField(
+        label='Fecha',
+        widget=SelectDateWidget(
+            empty_label=("Año", "Mes", "Día"),
+            months=MONTHS
             )
+        )
+
+    # Metadatos del formulario
 
     class Meta:
         model = Car
@@ -42,13 +51,19 @@ class CarForm(forms.ModelForm):
             'schedule': 'Horario',
             'date': 'Fecha'
         }
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args,**kwargs)
-        self.fields['provider'].queryset= User.objects.filter(is_staff=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['provider'].queryset = User.objects.filter(is_staff=True)
+
+
+# Formulario empleado para el registro de las citas de los usuarios
+# administrativos
 
 class CarStaffForm(forms.ModelForm,):
 
+    # Diccionario para los meses del widget
+
     MONTHS = {
         1: ('Enero'), 2: ('Febrero'),
         3: ('Marzo'), 4: ('Abril'),
@@ -58,17 +73,22 @@ class CarStaffForm(forms.ModelForm,):
         11: ('Noviembre'), 12: ('Diciembre')
     }
 
-    date = forms.DateField(label='Fecha',
-                widget=SelectDateWidget(
-                    empty_label=("Año", "Mes", "Día"),
-                    months=MONTHS
-                )
+    # Espacio del formulario que emplea widget
+
+    date = forms.DateField(
+        label='Fecha',
+        widget=SelectDateWidget(
+            empty_label=("Año", "Mes", "Día"),
+            months=MONTHS
             )
+        )
+
+    # Metadatos del formulario
 
     class Meta:
         model = Car
         fields = [
-			'user',
+            'user',
             'provider',
             'brand',
             'car_model',
@@ -78,7 +98,7 @@ class CarStaffForm(forms.ModelForm,):
             'date'
             ]
         labels = {
-			'user':'Cliente',
+            'user': 'Cliente',
             'provider': 'Mecánico',
             'brand': 'Marca',
             'car_model': 'Modelo',
@@ -87,7 +107,8 @@ class CarStaffForm(forms.ModelForm,):
             'schedule': 'Horario',
             'date': 'Fecha'
         }
+
     def __init__(self, *args, **kwargs):
-        super().__init__(*args,**kwargs)
-        self.fields['provider'].queryset= User.objects.filter(is_staff=True)
-        self.fields['user'].queryset= User.objects.filter(is_staff= False)
+        super().__init__(*args, **kwargs)
+        self.fields['provider'].queryset = User.objects.filter(is_staff=True)
+        self.fields['user'].queryset = User.objects.filter(is_staff=False)

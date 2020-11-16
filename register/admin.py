@@ -1,3 +1,3 @@
-from django.contrib import admin
+# from django.contrib import admin
 
-# Register your models here.
+# Registro del modelo. Innecesario para el proyecto
